@@ -2,6 +2,7 @@ package com.example.gopinathana1074.anjalicontactapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -20,10 +21,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TABLE_NAME + " (" +
-            ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            COLUMN_NAME_CONTACT + " TEXT," +
-            COLUMN_PHONE + " TEXT," +
-            COLUMN_EMAIL + " TEXT)";
+                    ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    COLUMN_NAME_CONTACT + " TEXT," +
+                    COLUMN_PHONE + " TEXT," +
+                    COLUMN_EMAIL + " TEXT)";
 
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -47,14 +48,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean insertData(String name, String phoneNum, String email){
         Log.d("AnjaliContactApp", "DatabaseHelper: inserting data");
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentVals = new ContentValues();
+        long result;
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+            Log.d("AnjaliContactApp", "created SQLiteDatabase");
+            ContentValues contentVals = new ContentValues();
+            Log.d("AnjaliContactApp", "Instantiated contentVals");
 
-        contentVals.put(COLUMN_NAME_CONTACT, name);
-        contentVals.put(COLUMN_PHONE, phoneNum);
-        contentVals.put(COLUMN_EMAIL, email);
+            contentVals.put(COLUMN_NAME_CONTACT, name);
+            Log.d("AnjaliContactApp", "COLUMN_NAME_CONTACT = " + contentVals.get(COLUMN_NAME_CONTACT));
+            contentVals.put(COLUMN_PHONE, phoneNum);
+            contentVals.put(COLUMN_EMAIL, email);
+            Log.d("AnjaliContactApp", "DatabaseHelper: created contentVals");
 
-        long result = db.insert(TABLE_NAME, null, contentVals);
+            result = db.insert(TABLE_NAME, null, contentVals);
+        }
 
         if(result == -1){
             Log.d("AnjaliContactApp", "DatabaseHelper: Contact insert FAILED");
@@ -65,6 +72,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+    public Cursor getAllData(){
+        Log.d("AnjaliContactApp", "DatabaseHelper: getAllData: pulling all records from db");
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor c = db.rawQuery("select * from " + TABLE_NAME, null);
+        return c;
+    }
+
+
 
 
 }
