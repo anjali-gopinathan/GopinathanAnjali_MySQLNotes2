@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             //Append res column [0 (ID), 1 (Name), 2 (Phone), 3 (Email)] to the buffer
             //see StringBuffer and Cursor API's
             //Delimit each append with new line "\n"
-            
+
         }
         showMessage("Data", buffer.toString());
     }
