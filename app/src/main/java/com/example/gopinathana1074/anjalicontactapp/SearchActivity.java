@@ -20,10 +20,15 @@ public class SearchActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-        //Set the string in the textview on ui
         TextView tv4 = findViewById(R.id.textView4);
-        tv4.setText(message);
 
+        //Set the string in the textview on ui
+        if(message.length() ==0){
+            tv4.setText("No contacts found");
+        }
+        else {
+            tv4.setText(message);
+        }
         //Display what your search was
         Intent intent2 = getIntent();
 //        String yourSearch = intent.getStringExtra(MainActivity.YOUR_SEARCH);

@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editName, editPhone, editEmail;
 
     public static final String EXTRA_MESSAGE = "com.example.gopinathana1074.anjalicontactapp.MESSAGE";
-//    public static final String YOUR_SEARCH = "com.example.gopinathana1074.anjalicontactapp.MESSAGE";
+    public static final String YOUR_SEARCH = "com.example.gopinathana1074.anjalicontactapp.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,11 +116,17 @@ public class MainActivity extends AppCompatActivity {
                 buffer.append("\n");
                 Log.d("AnjaliContactApp", "MainActivity: searchRecord: appended data");
             }
-            Intent intent = new Intent(this, SearchActivity.class);
-            intent.putExtra(EXTRA_MESSAGE, buffer.toString());
-//            intent.putExtra(YOUR_SEARCH, editName.getText().toString());
-            startActivity(intent);
+
+//
+
         }
+        Intent intent = new Intent(this, SearchActivity.class);
+        Intent intent2 = new Intent(this, SearchActivity.class);
+
+        intent.putExtra(EXTRA_MESSAGE, buffer.toString());
+
+        intent2.putExtra(YOUR_SEARCH, editName.getText().toString());
+        startActivity(intent);
     }
 
 }
